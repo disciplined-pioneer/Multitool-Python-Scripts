@@ -32,6 +32,50 @@ def determinant(matrix):
 
     return result
 
+def degree_minus_1(matrix):
+
+    determ = determinant(matrix)
+    
+    if determ != 0:
+        # Инициализация матрицы результатов
+        matrix_result = np.zeros((3, 3))
+        
+        print("\nИсходная матрица:")
+        print(matrix)
+        print("\nВычисление значений A для каждой ячейки:\n")
+        
+        # Проход по каждой ячейке матрицы
+        for row in range(3):
+            for col in range(3):
+                
+                # Формируем матрицу миноров
+                minors = np.delete(np.delete(matrix, row, axis=0), col, axis=1)
+                
+                # Вычисляем произведения диагоналей
+                main_diagonal = np.prod(np.diagonal(minors))
+                secondary_diagonal = np.prod(np.diagonal(np.fliplr(minors)))
+                
+                A = main_diagonal - secondary_diagonal
+                
+                # Меняем знак в зависимости от положения
+                if (row + col) % 2 != 0:
+                    A = -A
+                
+                matrix_result[row, col] = A
+                
+                # Вывод промежуточных результатов
+                print(f"A({row+1}, {col+1}):")
+                print(minors)
+                print(f"Главная диагональ: {main_diagonal}")
+                print(f"Второстепенная диагональ: {secondary_diagonal}")
+                print(f"Результат A({row+1}, {col+1}) = {A}\n")
+        
+        # Транспонирование и вычисление окончательного результата
+        return  1 / determ * matrix_result.T
+
+    else:
+        return None
+
 def main():
 
     # Запрос количества переменных
