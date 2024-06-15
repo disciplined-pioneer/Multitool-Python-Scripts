@@ -76,6 +76,18 @@ def degree_minus_1(matrix):
     else:
         return None
 
+def print_result(matrix):
+    print("Результат:")
+    fraction_result = [[Fraction(elem).limit_denominator() for elem in row] for row in matrix]
+
+    # Установим ширину для красивого выравнивания
+    max_length = max(len(str(Fraction(elem).limit_denominator())) for row in fraction_result for elem in row)
+
+    # Печатаем с отступом
+    for row in fraction_result:
+        print("   ".join(f"{str(elem):>{max_length}}" for elem in row))
+    print()
+
 def main():
 
     # Запрос количества переменных
@@ -89,6 +101,12 @@ def main():
         matrix.append(row)
 
     matrix = np.array(matrix, dtype=float)
+
+    result = degree_minus_1(matrix)
+    if result is None:
+        print('D = 0. Решения не существует')
+    else:
+        print_result(result)
 
 if __name__ == "__main__":
     main()
