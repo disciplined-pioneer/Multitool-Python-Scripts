@@ -42,3 +42,20 @@ for col in range(num_columns - 1):
     # Нормализуем базовую строку и сохраняем текущее состояние матрицы
     matrix1[base_row] /= matrix1[base_row, col]
     all_matrices.append(matrix1.copy())
+
+# Вывод всех получившихся матриц в виде дробей
+for i, m in enumerate(all_matrices, start=0):
+    print(f"\nMatrix after iteration {i}:")
+    fraction_matrix = [[Fraction(elem).limit_denominator() for elem in row] for row in m]
+    for row in fraction_matrix:
+        print("   ".join(map(str, row))) 
+    print()
+
+# Получение финального ответа
+final_solution = matrix1[result_index][:, -1]
+
+# Выводим окончательное решение
+print("Конечный ответ (значения переменных):")
+for i, val in enumerate(final_solution):
+    print(f"x{i+1} = {Fraction(val).limit_denominator()}")  # Преобразуем к дроби для вывода
+print()
